@@ -3,15 +3,15 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Pitch Deck Generator | Investor-Ready Slides in Minutes",
+  title: "Pitch Deck Generator — AI-Powered Investor Decks | Velocity Forge",
   description:
-    "Generate a professional 10-slide pitch deck from your business idea. AI-powered, investor-ready PPTX download. Free outline, premium full deck for $12.99.",
+    "Turn your startup idea into a 10-slide investor pitch deck in under 60 seconds. Professional PPTX with market sizing, financials, and speaker notes. Free outline, full deck $12.99.",
   keywords:
-    "pitch deck generator, AI pitch deck, startup pitch deck, investor presentation, pitch deck template, AI presentation maker, business plan slides",
+    "pitch deck generator, AI pitch deck, startup pitch deck, investor presentation, pitch deck template, AI presentation maker",
   openGraph: {
-    title: "AI Pitch Deck Generator — Investor-Ready in Minutes",
+    title: "Pitch Deck Generator — Velocity Forge",
     description:
-      "Describe your startup. Get a professional 10-slide pitch deck. Powered by AI.",
+      "Turn your startup idea into a 10-slide investor pitch deck. AI-powered. Download as PPTX.",
     type: "website",
   },
 };
@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-950 text-white antialiased">
+      <body>
         {children}
         <Analytics />
       </body>
