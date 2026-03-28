@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://pitch-deck-ai.vercel.app/sitemap.xml",
+    sitemap: "https://pitch-deck-ai-nine.vercel.app/sitemap.xml",
   };
 }

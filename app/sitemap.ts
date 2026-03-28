@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://pitch-deck-ai.vercel.app",
+      url: "https://pitch-deck-ai-nine.vercel.app",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
