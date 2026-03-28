@@ -239,7 +239,7 @@ export default function Home() {
               <div className="flex flex-wrap justify-center gap-3 my-4">
                 {["Detailed bullet points", "Speaker notes", "Market sizing", "Competitive analysis", "Financial projections", "PPTX download"].map((item) => (
                   <span key={item} className="px-3 py-1.5 bg-gray-800 rounded-full text-sm text-gray-300 border border-gray-700">
-                    \u2713 {item}
+                    {"\u2713"} {item}
                   </span>
                 ))}
               </div>
@@ -305,7 +305,7 @@ export default function Home() {
             <details key={faq.q} className="bg-gray-900/50 border border-gray-800 rounded-xl group">
               <summary className="px-6 py-4 cursor-pointer text-white font-medium flex items-center justify-between">
                 {faq.q}
-                <span className="text-gray-500 group-open:rotate-180 transition-transform">\u25BE</span>
+                <span className="text-gray-500 group-open:rotate-180 transition-transform">{"\u25BE"}</span>
               </summary>
               <div className="px-6 pb-4 text-sm text-gray-400">{faq.a}</div>
             </details>
