@@ -14,59 +14,6 @@ interface Outline {
   slides: SlideOutline[];
 }
 
-// --- Icon Components ---
-function ArrowRight({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3.333 8h9.334M8.667 4l4 4-4 4" />
-    </svg>
-  );
-}
-
-function Spinner({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg className={`animate-spin-slow ${className}`} viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2.5" opacity="0.15" />
-      <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function CheckIcon({ className = "w-3.5 h-3.5", style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3.5 8.5L6.5 11.5L12.5 4.5" />
-    </svg>
-  );
-}
-
-function ChevronDown({ className = "w-4 h-4", style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 6l4 4 4-4" />
-    </svg>
-  );
-}
-
-function FileIcon() {
-  return (
-    <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11.667 2.5H5.833A1.667 1.667 0 004.167 4.167v11.666A1.667 1.667 0 005.833 17.5h8.334a1.667 1.667 0 001.666-1.667V7.5L11.667 2.5z" />
-      <path d="M11.667 2.5V7.5h4.166" />
-    </svg>
-  );
-}
-
-function LockIcon() {
-  return (
-    <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="4" y="7" width="8" height="7" rx="1" />
-      <path d="M5.5 7V5a2.5 2.5 0 015 0v2" />
-    </svg>
-  );
-}
-
-// --- Main Component ---
 export default function Home() {
   const [businessIdea, setBusinessIdea] = useState("");
   const [targetAudience, setTargetAudience] = useState("");
@@ -77,7 +24,6 @@ export default function Home() {
   const [rateLimited, setRateLimited] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [checkingOut, setCheckingOut] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const handleGenerate = async () => {
     if (!businessIdea.trim()) return;
@@ -135,377 +81,308 @@ export default function Home() {
     }
   };
 
-  const faqs = [
-    { q: "What do I get for free?", a: "A complete 10-slide deck outline with titles, descriptions, and structure tailored to your business. Enough to validate your narrative before committing." },
-    { q: "What\u2019s in the full PPTX?", a: "10 professionally written slides with detailed bullet points, market sizing, competitive analysis, financial projections, and speaker notes. Downloads as a .pptx file you can open in PowerPoint, Google Slides, or Keynote." },
-    { q: "Can I edit the downloaded file?", a: "Yes. It\u2019s a standard .pptx file. Add your logo, tweak the copy, swap colors \u2014 it\u2019s yours." },
-    { q: "Is my idea kept private?", a: "We don\u2019t store your business ideas after generation. Your data is processed securely and never used for training." },
-    { q: "Can I get a refund?", a: "Since decks are generated instantly, we can\u2019t offer refunds. If something goes wrong, email us and we\u2019ll sort it out." },
-  ];
-
   return (
-    <main className="min-h-screen" style={{ background: 'var(--bg)' }}>
-      {/* ---- NAV ---- */}
-      <nav className="sticky top-0 z-50 backdrop-blur-xl" style={{ background: 'rgba(9,9,11,0.8)', borderBottom: '1px solid var(--border-subtle)' }}>
-        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-            <div className="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold text-white" style={{ background: 'var(--accent)' }}>
-              VF
-            </div>
-            Velocity Forge
-          </a>
-          <div className="flex items-center gap-5">
-            <a href="https://cover-letter-ai-one.vercel.app" className="text-xs font-medium transition-colors" style={{ color: 'var(--text-muted)' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-              Cover Letters
-            </a>
-            <a href="mailto:mudcrabwarrior@gmail.com" className="text-xs font-medium transition-colors" style={{ color: 'var(--text-muted)' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-              Support
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      {/* ---- HERO ---- */}
-      <section className="relative pt-20 pb-4 overflow-hidden">
-        {/* Background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(ellipse, var(--accent-light), transparent 70%)' }} />
-
-        <div className="relative max-w-2xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium mb-6"
-            style={{ background: 'var(--accent-surface)', color: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent-light)' }} />
-            Now with PPTX download
-          </div>
-
-          <h1 className="text-[2.5rem] md:text-5xl font-bold leading-[1.1] tracking-tight mb-4" style={{ color: 'var(--text-primary)' }}>
-            Your pitch deck,<br />
-            <span style={{ color: 'var(--accent-light)' }}>generated.</span>
+    <main className="min-h-screen">
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-brand-900 to-brand-700 text-white py-16 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            AI Pitch Deck Generator
           </h1>
-
-          <p className="text-base md:text-lg leading-relaxed max-w-lg mx-auto mb-2" style={{ color: 'var(--text-secondary)' }}>
-            Describe your startup. Get a 10-slide investor deck with market sizing, financials, and speaker notes. Download as PowerPoint.
+          <p className="text-xl text-blue-100 mb-2">
+            Describe your startup. Get a 10-slide investor deck. Under 60 seconds.
+          </p>
+          <p className="text-sm text-blue-200">
+            Free outline — no signup required
           </p>
         </div>
       </section>
 
-      {/* ---- INPUT FORM ---- */}
-      <section className="pb-8">
-        <div className="max-w-xl mx-auto px-6">
-          <div className="rounded-xl p-5 md:p-6" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <div className="space-y-4">
+      {/* Form */}
+      <section className="max-w-3xl mx-auto px-4 -mt-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+          <div className="space-y-5">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
+                Describe your business *
+              </label>
+              <textarea
+                value={businessIdea}
+                onChange={(e) => setBusinessIdea(e.target.value)}
+                placeholder="e.g., An AI platform that helps restaurants optimize menu pricing using ingredient costs, competition data, and demand patterns..."
+                rows={4}
+                maxLength={5000}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none resize-y"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-secondary)' }}>
-                  Describe your business <span style={{ color: 'var(--text-muted)' }}>*</span>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                  Target investors
                 </label>
-                <textarea
-                  value={businessIdea}
-                  onChange={(e) => setBusinessIdea(e.target.value)}
-                  placeholder="e.g., An AI platform that helps restaurants optimize menu pricing using ingredient costs, competition data, and demand patterns..."
-                  className="w-full h-28 rounded-lg px-3.5 py-2.5 text-sm placeholder:text-zinc-600 resize-none transition-colors"
-                  style={{ background: 'var(--surface-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
-                  maxLength={5000}
-                  onFocus={e => e.currentTarget.style.borderColor = 'var(--accent-light)'}
-                  onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                <input
+                  type="text"
+                  value={targetAudience}
+                  onChange={(e) => setTargetAudience(e.target.value)}
+                  placeholder="e.g., Seed VCs in FoodTech"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none"
                 />
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-secondary)' }}>
-                    Target investors
-                  </label>
-                  <input
-                    type="text"
-                    value={targetAudience}
-                    onChange={(e) => setTargetAudience(e.target.value)}
-                    placeholder="e.g., Seed VCs in FoodTech"
-                    className="w-full rounded-lg px-3.5 py-2.5 text-sm placeholder:text-zinc-600 transition-colors"
-                    style={{ background: 'var(--surface-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
-                    onFocus={e => e.currentTarget.style.borderColor = 'var(--accent-light)'}
-                    onBlur={e => e.currentTarget.style.borderColor = 'var(--border)'}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-secondary)' }}>
-                    Stage
-                  </label>
-                  <select
-                    value={stage}
-                    onChange={(e) => setStage(e.target.value)}
-                    className="w-full rounded-lg px-3.5 py-2.5 text-sm transition-colors"
-                    style={{ background: 'var(--surface-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
-                  >
-                    <option>Pre-seed / Idea stage</option>
-                    <option>Seed / MVP built</option>
-                    <option>Series A / Product-market fit</option>
-                    <option>Series B+ / Scaling</option>
-                    <option>Bootstrapped / Profitable</option>
-                  </select>
-                </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                  Stage
+                </label>
+                <select
+                  value={stage}
+                  onChange={(e) => setStage(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none"
+                >
+                  <option>Pre-seed / Idea stage</option>
+                  <option>Seed / MVP built</option>
+                  <option>Series A / Product-market fit</option>
+                  <option>Series B+ / Scaling</option>
+                  <option>Bootstrapped / Profitable</option>
+                </select>
               </div>
-
-              <button
-                onClick={handleGenerate}
-                disabled={loading || !businessIdea.trim()}
-                className="w-full h-11 rounded-lg text-sm font-medium text-white flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ background: loading ? 'var(--accent)' : 'var(--accent)', }}
-                onMouseEnter={e => { if (!loading) e.currentTarget.style.background = 'var(--accent-light)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'var(--accent)'; }}
-              >
-                {loading ? (
-                  <>
-                    <Spinner className="w-4 h-4" />
-                    <span>Generating outline...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Generate free outline</span>
-                    <ArrowRight />
-                  </>
-                )}
-              </button>
             </div>
+
+            <button
+              onClick={handleGenerate}
+              disabled={loading || !businessIdea.trim()}
+              className="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 text-white font-semibold py-3 px-6 rounded-lg transition-colors text-lg"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Generating outline...
+                </span>
+              ) : generated ? (
+                "Generate Another"
+              ) : (
+                "Generate Free Outline"
+              )}
+            </button>
           </div>
-          <p className="text-center text-[11px] mt-3" style={{ color: 'var(--text-muted)' }}>
+
+          <p className="text-xs text-gray-500 text-center mt-3">
             Free tier: 3 outlines per hour. No account required.
           </p>
+
+          {/* Error */}
+          {errorMsg && !rateLimited && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 text-center">
+              {errorMsg}
+            </div>
+          )}
+
+          {/* Rate Limited */}
+          {rateLimited && (
+            <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+              <p className="text-sm text-yellow-700 mb-3">{errorMsg}</p>
+              <button
+                onClick={handleUpgrade}
+                disabled={checkingOut}
+                className="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2 px-5 rounded-lg transition-colors text-sm"
+              >
+                Get full deck for $12.99
+              </button>
+            </div>
+          )}
+
+          {/* Outline Result */}
+          {generated && outline && (
+            <div className="mt-8 border-t pt-6">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span className="text-xs font-medium text-green-600">Outline generated</span>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">{outline.companyName}</h2>
+              <p className="text-sm text-gray-500 mb-4">{outline.tagline}</p>
+
+              {/* Slides */}
+              <div className="border rounded-lg overflow-hidden">
+                {outline.slides.map((slide, i) => (
+                  <div
+                    key={slide.slideNumber}
+                    className={`flex gap-3.5 px-4 py-3 ${i % 2 === 0 ? "bg-gray-50" : "bg-white"} ${i < outline.slides.length - 1 ? "border-b" : ""}`}
+                  >
+                    <span className="flex-shrink-0 w-6 h-6 rounded bg-brand-50 text-brand-600 text-xs font-mono font-medium flex items-center justify-center border border-brand-100">
+                      {slide.slideNumber}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-gray-900">{slide.title}</p>
+                      <p className="text-xs mt-0.5 leading-relaxed text-gray-500">{slide.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Upgrade CTA */}
+              <div className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  Download the Full Deck — $12.99
+                </h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  10 slides with detailed bullets, market sizing, competitive analysis, financial projections, and speaker notes. Ready to present.
+                </p>
+                <ul className="text-sm text-gray-700 space-y-1.5 mb-4">
+                  {["Detailed content per slide", "Speaker notes included", "Market data & financials", "Downloadable PPTX file"].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="text-green-500 mt-0.5">&#10003;</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={handleUpgrade}
+                  disabled={checkingOut}
+                  className="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-gray-300 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                >
+                  {checkingOut ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      Processing...
+                    </span>
+                  ) : (
+                    "Get Full Deck — $12.99"
+                  )}
+                </button>
+                <p className="text-xs text-gray-500 mt-2 text-center">
+                  One-time payment. Instant delivery. Powered by Stripe.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* ---- ERROR ---- */}
-      {errorMsg && !rateLimited && (
-        <div className="max-w-xl mx-auto px-6 pb-6 animate-fade-up">
-          <div className="rounded-lg p-3.5 text-sm text-center" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#fca5a5' }}>
-            {errorMsg}
+      {/* Stats */}
+      <section className="max-w-3xl mx-auto px-4 py-12 text-center">
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <div className="text-2xl font-bold text-brand-700">500+</div>
+            <div className="text-sm text-gray-500">Decks Generated</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-brand-700">60 sec</div>
+            <div className="text-sm text-gray-500">Average Generation</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold text-brand-700">Free</div>
+            <div className="text-sm text-gray-500">No Signup Required</div>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* ---- RATE LIMITED ---- */}
-      {rateLimited && (
-        <div className="max-w-xl mx-auto px-6 pb-6 animate-fade-up">
-          <div className="rounded-lg p-5 text-center" style={{ background: 'rgba(234,179,8,0.06)', border: '1px solid rgba(234,179,8,0.15)' }}>
-            <p className="text-sm mb-3" style={{ color: '#fde047' }}>{errorMsg}</p>
-            <button
-              onClick={handleUpgrade}
-              disabled={checkingOut}
-              className="h-10 px-5 rounded-lg text-sm font-medium text-white transition-all"
-              style={{ background: 'var(--accent)' }}
-            >
-              Get full deck for $12.99
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ---- OUTLINE RESULT ---- */}
-      {generated && outline && (
-        <section className="pb-12 animate-fade-up">
-          <div className="max-w-xl mx-auto px-6">
-            {/* Header */}
-            <div className="mb-5">
-              <div className="flex items-center gap-2 mb-1">
-                <div className="w-2 h-2 rounded-full" style={{ background: 'var(--success)' }} />
-                <span className="text-xs font-medium" style={{ color: 'var(--success)' }}>Outline generated</span>
-              </div>
-              <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{outline.companyName}</h2>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{outline.tagline}</p>
-            </div>
-
-            {/* Slides */}
-            <div className="rounded-xl overflow-hidden stagger-children" style={{ border: '1px solid var(--border)' }}>
-              {outline.slides.map((slide, i) => (
-                <div key={slide.slideNumber}
-                  className="flex gap-3.5 px-4 py-3.5"
-                  style={{
-                    background: i % 2 === 0 ? 'var(--surface)' : 'transparent',
-                    borderBottom: i < outline.slides.length - 1 ? '1px solid var(--border-subtle)' : 'none',
-                  }}>
-                  <span className="flex-shrink-0 w-6 h-6 rounded text-[11px] font-mono font-medium flex items-center justify-center"
-                    style={{ background: 'var(--accent-surface)', color: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
-                    {slide.slideNumber}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{slide.title}</p>
-                    <p className="text-xs mt-0.5 leading-relaxed" style={{ color: 'var(--text-muted)' }}>{slide.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Upsell */}
-            <div className="mt-6 rounded-xl p-5" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'var(--accent-surface)', border: '1px solid var(--accent-border)' }}>
-                  <FileIcon />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>Download the full deck</h3>
-                  <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--text-muted)' }}>
-                    10 slides with detailed bullets, market sizing, competitive analysis, financial projections, and speaker notes. Ready to present.
-                  </p>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4">
-                    {["Detailed content", "Speaker notes", "Market data", "PPTX file"].map(item => (
-                      <span key={item} className="flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                        <CheckIcon className="w-3 h-3" style={{ color: 'var(--accent-light)' }} />
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={handleUpgrade}
-                      disabled={checkingOut}
-                      className="h-9 px-4 rounded-lg text-sm font-medium text-white flex items-center gap-2 transition-all disabled:opacity-50"
-                      style={{ background: 'var(--accent)' }}
-                      onMouseEnter={e => e.currentTarget.style.background = 'var(--accent-light)'}
-                      onMouseLeave={e => e.currentTarget.style.background = 'var(--accent)'}
-                    >
-                      {checkingOut ? (
-                        <><Spinner className="w-3.5 h-3.5" /> Processing...</>
-                      ) : (
-                        <>Get full deck &mdash; $12.99</>
-                      )}
-                    </button>
-                    <span className="text-[11px] flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-                      <LockIcon /> One-time payment
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ---- HOW IT WORKS (pre-generation) ---- */}
+      {/* How It Works */}
       {!generated && (
-        <section className="py-16">
-          <div className="max-w-3xl mx-auto px-6">
-            <h2 className="text-xs font-medium uppercase tracking-widest mb-8 text-center" style={{ color: 'var(--text-muted)' }}>
-              How it works
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px rounded-xl overflow-hidden" style={{ background: 'var(--border)', border: '1px solid var(--border)' }}>
-              {[
-                { step: "01", title: "Describe", desc: "Enter your business idea, target investors, and company stage." },
-                { step: "02", title: "Generate", desc: "Our AI creates a structured 10-slide narrative optimized for investors." },
-                { step: "03", title: "Download", desc: "Get your PPTX file. Edit in PowerPoint, Slides, or Keynote." },
-              ].map((item) => (
-                <div key={item.step} className="p-5" style={{ background: 'var(--bg)' }}>
-                  <span className="font-mono text-xs font-medium mb-2 block" style={{ color: 'var(--accent-light)' }}>{item.step}</span>
-                  <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{item.desc}</p>
+        <section className="max-w-3xl mx-auto px-4 pb-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { step: "1", title: "Describe", desc: "Enter your business idea, target investors, and company stage." },
+              { step: "2", title: "Generate", desc: "Our AI creates a structured 10-slide narrative optimized for investors." },
+              { step: "3", title: "Download", desc: "Get your PPTX file. Edit in PowerPoint, Slides, or Keynote." },
+            ].map((item) => (
+              <div key={item.step} className="text-center">
+                <div className="w-12 h-12 bg-brand-50 text-brand-700 rounded-full flex items-center justify-center mx-auto mb-3 text-lg font-bold border border-brand-100">
+                  {item.step}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ---- WHAT YOU GET ---- */}
-      {!generated && (
-        <section className="py-8 pb-16">
-          <div className="max-w-3xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Free column */}
-              <div className="rounded-xl p-5" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Free outline</h3>
-                  <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: 'var(--accent-surface)', color: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
-                    $0
-                  </span>
-                </div>
-                <ul className="space-y-2">
-                  {["10-slide structure", "AI-generated titles", "Slide descriptions", "Company naming", "Narrative flow"].map(item => (
-                    <li key={item} className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                      <CheckIcon className="w-3 h-3 flex-shrink-0" style={{ color: 'var(--accent-light)' }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Paid column */}
-              <div className="rounded-xl p-5 relative" style={{ background: 'var(--surface)', border: '1px solid var(--accent-border)' }}>
-                <div className="absolute -top-2.5 right-4">
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full text-white" style={{ background: 'var(--accent)' }}>
-                    POPULAR
-                  </span>
-                </div>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Full PPTX deck</h3>
-                  <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: 'var(--accent-surface)', color: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
-                    $12.99
-                  </span>
-                </div>
-                <ul className="space-y-2">
-                  {["Everything in Free", "Detailed bullet points", "Speaker notes per slide", "Market sizing & TAM", "Competitive analysis", "Financial projections", "Downloadable .pptx file"].map(item => (
-                    <li key={item} className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                      <CheckIcon className="w-3 h-3 flex-shrink-0" style={{ color: 'var(--accent-light)' }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ---- FAQ ---- */}
-      <section className="py-12">
-        <div className="max-w-xl mx-auto px-6">
-          <h2 className="text-xs font-medium uppercase tracking-widest mb-6 text-center" style={{ color: 'var(--text-muted)' }}>
-            Questions
-          </h2>
-          <div className="space-y-px rounded-xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
-            {faqs.map((faq, i) => (
-              <div key={i} style={{ background: 'var(--surface)', borderBottom: i < faqs.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full text-left px-4 py-3.5 flex items-center justify-between gap-4"
-                >
-                  <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${openFaq === i ? 'rotate-180' : ''}`}
-                    style={{ color: 'var(--text-muted)' }} />
-                </button>
-                {openFaq === i && (
-                  <div className="px-4 pb-3.5 animate-fade-in">
-                    <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{faq.a}</p>
-                  </div>
-                )}
+                <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
+                <p className="text-sm text-gray-500">{item.desc}</p>
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Free vs Paid */}
+      {!generated && (
+        <section className="max-w-3xl mx-auto px-4 pb-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Free vs Full Deck</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white border rounded-xl p-6">
+              <div className="flex items-baseline gap-2 mb-4">
+                <h3 className="text-xl font-bold text-gray-900">Free Outline</h3>
+                <span className="text-sm text-gray-500">$0</span>
+              </div>
+              <ul className="space-y-2">
+                {["10-slide structure", "AI-generated titles", "Slide descriptions", "Company naming", "Narrative flow"].map(item => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
+                    <span className="text-green-500">&#10003;</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-white border-2 border-brand-500 rounded-xl p-6 relative">
+              <div className="absolute -top-2.5 right-4">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-full text-white bg-brand-600">
+                  POPULAR
+                </span>
+              </div>
+              <div className="flex items-baseline gap-2 mb-4">
+                <h3 className="text-xl font-bold text-gray-900">Full PPTX Deck</h3>
+                <span className="text-sm font-semibold text-brand-600">$12.99</span>
+              </div>
+              <ul className="space-y-2">
+                {["Everything in Free", "Detailed bullet points", "Speaker notes per slide", "Market sizing & TAM", "Competitive analysis", "Financial projections", "Downloadable .pptx file"].map(item => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
+                    <span className="text-brand-600">&#10003;</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* FAQ */}
+      <section className="max-w-3xl mx-auto px-4 pb-16">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        <div className="space-y-4">
+          {[
+            { q: "What do I get for free?", a: "A complete 10-slide deck outline with titles, descriptions, and structure tailored to your business. Enough to validate your narrative before committing." },
+            { q: "What\u2019s in the full PPTX?", a: "10 professionally written slides with detailed bullet points, market sizing, competitive analysis, financial projections, and speaker notes. Downloads as a .pptx file you can open in PowerPoint, Google Slides, or Keynote." },
+            { q: "Can I edit the downloaded file?", a: "Yes. It\u2019s a standard .pptx file. Add your logo, tweak the copy, swap colors \u2014 it\u2019s yours." },
+            { q: "Is my idea kept private?", a: "We don\u2019t store your business ideas after generation. Your data is processed securely and never used for training." },
+            { q: "Can I get a refund?", a: "Since decks are generated instantly, we can\u2019t offer refunds. If something goes wrong, email us and we\u2019ll sort it out." },
+          ].map((faq, i) => (
+            <details key={i} className="bg-white border rounded-lg p-4">
+              <summary className="font-semibold text-gray-800 cursor-pointer">
+                {faq.q}
+              </summary>
+              <p className="mt-2 text-sm text-gray-600">{faq.a}</p>
+            </details>
+          ))}
         </div>
       </section>
 
-      {/* ---- FOOTER ---- */}
-      <footer className="py-8" style={{ borderTop: '1px solid var(--border-subtle)' }}>
-        <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
-            <div className="w-4 h-4 rounded flex items-center justify-center text-[7px] font-bold text-white" style={{ background: 'var(--accent)' }}>
-              VF
-            </div>
+      {/* Footer */}
+      <footer className="bg-gray-100 border-t py-8 px-4 text-center text-sm text-gray-500">
+        <p>
+          Built by{" "}
+          <a href="https://velocityforgeai.gumroad.com" className="text-brand-600 hover:underline">
             Velocity Forge AI
-          </div>
-          <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--text-muted)' }}>
-            <a href="https://cover-letter-ai-one.vercel.app" className="hover:underline transition-colors"
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-              Cover Letter Generator
-            </a>
-            <span style={{ color: 'var(--border)' }}>|</span>
-            <a href="mailto:mudcrabwarrior@gmail.com" className="hover:underline transition-colors"
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-              Support
-            </a>
-          </div>
+          </a>
+        </p>
+        <p className="mt-1">Create Faster. Think Smarter. Scale Higher.</p>
+        <div className="mt-3 flex items-center justify-center gap-4 text-xs">
+          <a href="https://cover-letter-ai-one.vercel.app" className="text-brand-600 hover:underline">Cover Letters</a>
+          <span className="text-gray-300">|</span>
+          <a href="https://content-calendar-ai-delta.vercel.app" className="text-brand-600 hover:underline">Content Calendar</a>
+          <span className="text-gray-300">|</span>
+          <a href="https://website-roaster-ai-jade.vercel.app" className="text-brand-600 hover:underline">Website Roaster</a>
+          <span className="text-gray-300">|</span>
+          <a href="https://business-name-ai.vercel.app" className="text-brand-600 hover:underline">Business Names</a>
         </div>
       </footer>
     </main>
