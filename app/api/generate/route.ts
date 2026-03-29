@@ -7,6 +7,14 @@ import { generatePptxBuffer } from "@/lib/pptx";
 // Track which sessions have already been used
 const usedSessions = new Set<string>();
 
+// Sanitize user input to prevent prompt injection
+function sanitizeInput(input: string): string {
+  return input
+    .replace(/\b(ignore|disregard|forget)\s+(all\s+)?(previous|above|prior)\s+(instructions?|prompts?|rules?)/gi, '[filtered]')
+    .replace(/\b(you\s+are\s+now|act\s+as|pretend\s+to\s+be|new\s+instructions?)\b/gi, '[filtered]')
+    .replace(/\b(system\s*prompt|system\s*message|<\/?system>)/gi, '[filtered]');
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -65,8 +73,8 @@ export async function POST(req: NextRequest) {
       }
 
       const deck = await generateFullDeck(
-        businessIdea.slice(0, 5000),
-        (targetAudience || "General investors").slice(0, 2000),
+        sanitizeInput(businessIdea.slice(0, 5000)),
+        sanitizeInput((targetAudience || "General investors").slice(0, 2000)),
         (stage || "Early stage").slice(0, 500)
       );
 
@@ -88,8 +96,8 @@ export async function POST(req: NextRequest) {
     }
 
     const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       req.headers.get("x-real-ip") ||
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       "unknown";
 
     // 3 free outlines per IP per hour
@@ -107,8 +115,8 @@ export async function POST(req: NextRequest) {
     }
 
     const outline = await generateOutline(
-      businessIdea.slice(0, 5000),
-      (targetAudience || "General investors").slice(0, 2000),
+      sanitizeInput(businessIdea.slice(0, 5000)),
+      sanitizeInput((targetAudience || "General investors").slice(0, 2000)),
       (stage || "Early stage").slice(0, 500)
     );
 
